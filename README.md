@@ -4,12 +4,26 @@ Welcome to the IndustryCrew Crew project, powered by [crewAI](https://crewai.com
 
 ## Installation
 
-Ensure you have Python >=3.10 <3.13 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+Ensure you have Python 3.11.11 installed on your system. Recommended to use `pyenv` to select the python version
+and `pipenv` to manage the virtual environments.
+
+Start your virtual environment using:
+```bash
+pipenv shell
+```
+
+Install the packages in the Pipfile with
+```bash
+pipenv install
+pipenv graph | grep crewai # verify crewai has been installed
+```
+
+This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
 
 First, if you haven't already, install uv:
 
 ```bash
-pip install uv
+pipenv install uv
 ```
 
 Next, navigate to your project directory and install the dependencies:
