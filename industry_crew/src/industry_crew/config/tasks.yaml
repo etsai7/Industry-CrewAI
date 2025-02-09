@@ -1,17 +1,20 @@
-research_task:
+website_scraping_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
+    Analyze the website at {website_url} and generate a description and metadata.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    A markdown file with a few sentence description of the website from this website url: {website_url}
+    , what the business does, and a JSON mapping of the business name and url where the JSON is formatted
+    within the markdown file
+  agent: website_scraper
 
-reporting_task:
+industry_task:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Review the context received and provide the best NAICs industry and its associated 
+    code to go with the given context
   expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    From the previous report, retain all previous data, including the description of the restaurant.
+    Make sure the title of the report is the name of the restaurant. Underneath the title
+    add the description of the business. At the bottom, in JSON format, make sure all previous JSON
+    data is included and add the key value pairs to it for the NAICs industry name and
+    the corresponding code with their own key value pair.
+  agent: industry_analyst
