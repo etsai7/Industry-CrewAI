@@ -23,6 +23,8 @@ def run():
     }
     
     try:
+        website_url = input("What website would you like to use? ")
+        inputs['website_url'] = website_url
         IndustryCrew().crew().kickoff(inputs=inputs)
     except Exception as e:
         raise Exception(f"An error occurred while running the crew: {e}")

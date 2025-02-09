@@ -1,5 +1,6 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
+from crewai_tools.tools.website_search.website_search_tool import WebsiteSearchTool
 
 # If you want to run a snippet of code before or after the crew starts, 
 # you can use the @before_kickoff and @after_kickoff decorators
@@ -18,16 +19,17 @@ class IndustryCrew():
 	# If you would like to add tools to your agents, you can learn more about it here:
 	# https://docs.crewai.com/concepts/agents#agent-tools
 	@agent
-	def researcher(self) -> Agent:
+	def website_scraper(self):
 		return Agent(
-			config=self.agents_config['researcher'],
-			verbose=True
+			config=self.agents_config['website_scraper'],
+			verbose=True,
+			tools=[WebsiteSearchTool()]
 		)
 
 	@agent
-	def reporting_analyst(self) -> Agent:
+	def industry_analyst(self):
 		return Agent(
-			config=self.agents_config['reporting_analyst'],
+			config=self.agents_config['industry_analyst'],
 			verbose=True
 		)
 
@@ -35,17 +37,20 @@ class IndustryCrew():
 	# task dependencies, and task callbacks, check out the documentation:
 	# https://docs.crewai.com/concepts/tasks#overview-of-a-task
 	@task
-	def research_task(self) -> Task:
+	def website_scraping_task(self) -> Task:
 		return Task(
-			config=self.tasks_config['research_task'],
+			config=self.tasks_config['website_scraping_task'],
+			output_file='/reports/website_report.md'
 		)
 
 	@task
-	def reporting_task(self) -> Task:
+	def industry_task(self):
 		return Task(
-			config=self.tasks_config['reporting_task'],
-			output_file='report.md'
+			config=self.tasks_config['industry_task'],
+			output_file='/reports/website_report.md'
 		)
+
+
 
 	@crew
 	def crew(self) -> Crew:
