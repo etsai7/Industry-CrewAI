@@ -12,8 +12,8 @@ industry_task:
     Review the context received and provide the best NAICs industry and its associated 
     code to go with the given context
   expected_output: >
-    From the previous report, retain all previous data, including the description of the restaurant.
-    Make sure the title of the report is the name of the restaurant. Underneath the title
+    From the previous report, retain all previous data, including the description of the business.
+    Make sure the title of the report is the name of the business. Underneath the title
     add the description of the business. At the bottom, in JSON format, make sure all previous JSON
     data is included and add the key value pairs to it for the NAICs industry name and
     the corresponding code with their own key value pair.
