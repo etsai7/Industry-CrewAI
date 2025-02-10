@@ -1,0 +1,11 @@
+industry_task:
+  description: >
+    Review the context received and provide the best NAICs industry and its associated 
+    code to go with the given context
+  expected_output: >
+    Given the following business description, provide a brief summary that includes the name of 
+       the business or website at the top with markdown header, the description 
+       of this business in the next paragraph, and in the last paragraph a json format of the 
+       NCAIs industry name and NCAIs industry code with their own corresponding key value pairs. 
+       Use the following context: {business_description}
+  agent: industry_analyst

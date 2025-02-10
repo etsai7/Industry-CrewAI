@@ -1,0 +1,8 @@
+website_scraping_task:
+  description: >
+    Analyze the website at {website_url} and generate a description and metadata.
+  expected_output: >
+    A markdown file with a few sentence description of the website from this website url: {website_url}
+    , what the business does, and a JSON mapping of the business name and url where the JSON is formatted
+    within the markdown file
+  agent: website_scraper
