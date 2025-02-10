@@ -1,6 +1,10 @@
-# IndustryCrew Crew
+# Industry Crew AI
 
-Welcome to the IndustryCrew Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+Welcome to the IndustryCrew Crew project, powered by [crewAI](https://crewai.com). 
+This project helps set up a multi-agent AI system with ease, 
+leveraging the powerful and flexible framework provided by crewAI. 
+The goal is to provide user input to orchestrate responses on the provided 
+business and its associated NCAIS code.
 
 ## Installation
 
@@ -43,19 +47,29 @@ crewai install
 
 ## Running the Project
 
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
+### Crew Only
+To kickstart the industry crew of AI agents and begin task execution run this from the root:
 
 ```bash
-$ crewai run
+cd industry_crew
+crewai run
 ```
 
 This command initializes the industry-crew Crew, assembling the agents and assigning them tasks as defined in your configuration.
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
-
-## Understanding Your Crew
+###  Understanding Your Crew
 
 The industry-crew Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+
+### Chat Flow
+To kickstart a Flow which orchestrates crews and agents running the following from the root:
+
+```bash
+cd chat_flow
+crewai flow kickoff
+```
+This will start a flow asking users in a chat like experience for their business and website
+to extract information.
 
 ## Support
 
@@ -67,7 +81,7 @@ For support, questions, or feedback regarding the IndustryCrew Crew or crewAI.
 
 Let's create wonders together with the power and simplicity of crewAI.
 
-## Testing out APS
+## Testing out APIs
 ### Open AI
 
 ---
