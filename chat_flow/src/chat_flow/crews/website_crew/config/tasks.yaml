@@ -1,8 +1,18 @@
-website_scraping_task:
+website_urls_scraping_task:
   description: >
-    Analyze the website at {website_url} and generate a description and metadata.
+    Analyze the website at {website_url} and identify all subpage links present on the page.
   expected_output: >
-    A markdown file with a few sentence description of the website from this website url: {website_url}
-    , what the business does, and a JSON mapping of the business name and url where the JSON is formatted
-    within the markdown file
-  agent: website_scraper
+    Return back a list of the urls, with each url surround in string double quotes.
+  agent: website_url_scraper
+
+website_urls_selection_task:
+  description: >
+    Given a list of urls and subpage urls, select up to 10 links from the given list
+        that seem to provide information on the website or company's products or services, social media, description,
+        locations, business information or any relevant information to the business. Ignore any links that seem like
+        they are translations, advertisements, or seem irrelevant.
+  expected_output: >
+    Return back a filtered list of the urls, with each url surround in string double quotes.
+  context: [website_urls_scraping_task]
+  agent: website_url_analyst
+

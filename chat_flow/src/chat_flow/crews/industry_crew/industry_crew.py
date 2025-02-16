@@ -18,7 +18,7 @@ class IndustryCrew:
     def industry_analyst(self):
         return Agent(
             config=self.agents_config['industry_analyst'],
-            verbose=False
+            verbose=True
         )
 
 
@@ -40,7 +40,7 @@ class IndustryCrew:
             agents=self.agents,  # Automatically created by the @agent decorator
             tasks=self.tasks,  # Automatically created by the @task decorator
             process=Process.sequential,
-            verbose=False, # Turns off thinking output and results
+            verbose=True, # Turns off thinking output and results
             capture_output=True # Makes sure the output is still passed along
             # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
         )

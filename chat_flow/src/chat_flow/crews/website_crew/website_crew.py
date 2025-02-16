@@ -2,6 +2,8 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools.tools.website_search.website_search_tool import WebsiteSearchTool
 
+from chat_flow.tools.custom_tool import WebsiteUrls
+
 
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
@@ -21,20 +23,34 @@ class WebsiteCrew:
     # If you would lik to add tools to your crew, you can learn more about it here:
     # https://docs.crewai.com/concepts/agents#agent-tools
     @agent
-    def website_scraper(self):
+    def website_url_scraper(self):
         return Agent(
-            config=self.agents_config['website_scraper'],
-            verbose=False,
-            tools=[WebsiteSearchTool()]
+            config=self.agents_config['website_url_scraper'],
+            verbose=True,
+            tools=[WebsiteUrls()]
+        )
+
+    @agent
+    def website_url_analyst(self):
+        return Agent(
+            config=self.agents_config['website_url_analyst'],
+            verbose=True,
         )
 
     # To learn more about structured task outputs,
     # task dependencies, and task callbacks, check out the documentation:
     # https://docs.crewai.com/concepts/tasks#overview-of-a-task
     @task
-    def website_scraping_task(self) -> Task:
+    def website_urls_scraping_task(self) -> Task:
         return Task(
-            config=self.tasks_config['website_scraping_task']
+            config=self.tasks_config['website_urls_scraping_task'],
+            inputs={"url": "website_url"},
+        )
+
+    @task
+    def website_urls_selection_task(self):
+        return Task(
+            config=self.tasks_config['website_urls_selection_task']
         )
 
     @crew
@@ -47,6 +63,6 @@ class WebsiteCrew:
             agents=self.agents,  # Automatically created by the @agent decorator
             tasks=self.tasks,  # Automatically created by the @task decorator
             process=Process.sequential,
-            verbose=False,
+            verbose=True,
             capture_output=True
         )
