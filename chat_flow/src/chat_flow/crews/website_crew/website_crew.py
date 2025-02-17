@@ -2,13 +2,17 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools.tools.website_search.website_search_tool import WebsiteSearchTool
 
-from chat_flow.tools.custom_tool import WebsiteUrls
+from chat_flow.tools.website_urls import WebsiteUrls
+from chat_flow.states.chat_state import ChatState
+from pydantic import BaseModel
 
 
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
 
+class URLs(BaseModel):
+    urls: list[str]
 
 @CrewBase
 class WebsiteCrew:
@@ -20,6 +24,9 @@ class WebsiteCrew:
     agents_config = "config/agents.yaml"
     tasks_config = "config/tasks.yaml"
 
+    def __init__(self, chatState: ChatState ):
+        self.chatState = chatState
+
     # If you would lik to add tools to your crew, you can learn more about it here:
     # https://docs.crewai.com/concepts/agents#agent-tools
     @agent
@@ -27,7 +34,7 @@ class WebsiteCrew:
         return Agent(
             config=self.agents_config['website_url_scraper'],
             verbose=True,
-            tools=[WebsiteUrls()]
+            tools=[WebsiteUrls()],
         )
 
     @agent
@@ -45,13 +52,23 @@ class WebsiteCrew:
         return Task(
             config=self.tasks_config['website_urls_scraping_task'],
             inputs={"url": "website_url"},
+            output_pydantic=URLs,
+            callback=self.store_all_urls
         )
 
     @task
     def website_urls_selection_task(self):
         return Task(
-            config=self.tasks_config['website_urls_selection_task']
+            config=self.tasks_config['website_urls_selection_task'],
+            output_pydantic=URLs,
+            callback=self.store_filtered_urls
         )
+
+    def store_all_urls(self, urls):
+        self.chatState.website_subpage_urls = urls.pydantic.urls
+
+    def store_filtered_urls(self, filtered_urls):
+        self.chatState.website_filtered_subpage_urls = filtered_urls.pydantic.urls
 
     @crew
     def crew(self) -> Crew:

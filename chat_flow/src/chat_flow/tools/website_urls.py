@@ -24,7 +24,8 @@ class WebsiteUrls(BaseTool):
         try:
             print(f"Analyzing {url}")
             # Get the HTML content of the page
-            response = requests.get(url, timeout=5)
+            headers = {'User-Agent': 'Mozilla/5.0'}
+            response = requests.get(url, headers=headers, timeout=5)
             response.raise_for_status()  # Check if the request was successful
 
             # Parse the HTML with BeautifulSoup

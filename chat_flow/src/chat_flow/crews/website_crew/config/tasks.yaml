@@ -2,7 +2,9 @@ website_urls_scraping_task:
   description: >
     Analyze the website at {website_url} and identify all subpage links present on the page.
   expected_output: >
-    Return back a list of the urls, with each url surround in string double quotes.
+    Return back a filtered list of string urls that are the most relevant. This should be for a pydantic model
+    called URLs with a single field in it called "urls" and is of type list[str]. The output format should be in
+    "urls": list[str] form
   agent: website_url_scraper
 
 website_urls_selection_task:
@@ -12,7 +14,9 @@ website_urls_selection_task:
         locations, business information or any relevant information to the business. Ignore any links that seem like
         they are translations, advertisements, or seem irrelevant.
   expected_output: >
-    Return back a filtered list of the urls, with each url surround in string double quotes.
+    Return back a filtered list of string urls that are the most relevant. This should be for a pydantic model
+    called URLs with a single field in it called "urls" and is of type list[str]. The output format should be in
+    "urls": list[str] form
   context: [website_urls_scraping_task]
   agent: website_url_analyst
 

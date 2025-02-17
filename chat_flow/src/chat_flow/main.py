@@ -1,20 +1,14 @@
 #!/usr/bin/env python
 from typing import List
 
-from pydantic import BaseModel
 
 from crewai.flow import Flow, listen, start
 
 from chat_flow.crews.website_crew.website_crew import WebsiteCrew
 from chat_flow.crews.industry_crew.industry_crew import IndustryCrew
 
-class ChatState(BaseModel):
-    business_name: str = ""
-    website_url: str = ""
-    website_subpage_urls : List[str] = []
-    business_description: str = ""
-    naics_industry_name: str = ""
-    naics_industry_code: str = ""
+from chat_flow.states.chat_state import ChatState
+
 
 class ChatFlow(Flow[ChatState]):
     @start()
@@ -27,9 +21,12 @@ class ChatFlow(Flow[ChatState]):
     def get_website_urls(self, business_name):
         print(f'Agent: {business_name} is one of the business names of all times.\n\t\tPlease enter your website url:')
         url = self.state.website_url = input("User: ")
-        sub_links = WebsiteCrew().crew().kickoff(inputs = {"website_url": url})
-        self.state.website_subpage_urls = sub_links
-        print(f'Filtered SubLinks: {sub_links}')
+        sub_links = WebsiteCrew(self.state).crew().kickoff(inputs = {"website_url": url})
+        print(f'Type for subpage: {type(self.state.website_subpage_urls)}')
+        print(f'All Website URLs:')
+        print("\n".join(self.state.website_subpage_urls))
+        print(f'Filtered Website URLs:')
+        print("\n".join(self.state.website_filtered_subpage_urls))
         return sub_links
 
 
