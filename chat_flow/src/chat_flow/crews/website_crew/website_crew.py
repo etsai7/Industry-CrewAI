@@ -4,8 +4,8 @@ from crewai_tools.tools.website_search.website_search_tool import WebsiteSearchT
 
 from chat_flow.tools.website_urls import WebsiteUrls
 from chat_flow.states.chat_state import ChatState
+from chat_flow.tools.website_scraper import WebsiteScraperUrls
 from pydantic import BaseModel
-
 
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
@@ -44,6 +44,14 @@ class WebsiteCrew:
             verbose=True,
         )
 
+    @agent
+    def website_content_analyst(self):
+        return Agent(
+            config=self.agents_config['website_content_analyst'],
+            tools=[WebsiteScraperUrls(urls=self.chatState.website_filtered_subpage_urls)]
+        )
+
+
     # To learn more about structured task outputs,
     # task dependencies, and task callbacks, check out the documentation:
     # https://docs.crewai.com/concepts/tasks#overview-of-a-task
@@ -62,6 +70,12 @@ class WebsiteCrew:
             config=self.tasks_config['website_urls_selection_task'],
             output_pydantic=URLs,
             callback=self.store_filtered_urls
+        )
+
+    @task
+    def website_content_analysis_task(self):
+        return Task(
+            config=self.tasks_config['website_content_analysis_task'],
         )
 
     def store_all_urls(self, urls):

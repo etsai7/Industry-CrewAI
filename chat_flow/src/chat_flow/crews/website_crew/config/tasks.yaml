@@ -9,7 +9,7 @@ website_urls_scraping_task:
 
 website_urls_selection_task:
   description: >
-    Given a list of urls and subpage urls, select up to 10 links from the given list
+    Given a list of urls and subpage urls, select up to 6 links from the given list
         that seem to provide information on the website or company's products or services, social media, description,
         locations, business information or any relevant information to the business. Ignore any links that seem like
         they are translations, advertisements, or seem irrelevant.
@@ -20,3 +20,14 @@ website_urls_selection_task:
   context: [website_urls_scraping_task]
   agent: website_url_analyst
 
+website_content_analysis_task:
+  description: >
+    Given a list of filtered urls, use the website scraper tool to retrieve the contents of the given urls. Based on
+    the information returned, extract the website or company's products or services, social media, description,
+    locations, business information or any relevant information to the business.
+  expected_output: >
+    Provide an output that includes the name of the business or website with its url. Provide a brief description between
+    3 to 5 sentences describing what this business does. If data is found, provide the goods or services they have listed
+    and if included, pricing for said goods and services. Also include what social media they're on and the links they
+    have provided to it.
+  agent: website_content_analyst

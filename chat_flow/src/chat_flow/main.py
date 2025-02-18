@@ -22,11 +22,11 @@ class ChatFlow(Flow[ChatState]):
         print(f'Agent: {business_name} is one of the business names of all times.\n\t\tPlease enter your website url:')
         url = self.state.website_url = input("User: ")
         sub_links = WebsiteCrew(self.state).crew().kickoff(inputs = {"website_url": url})
-        print(f'Type for subpage: {type(self.state.website_subpage_urls)}')
-        print(f'All Website URLs:')
-        print("\n".join(self.state.website_subpage_urls))
-        print(f'Filtered Website URLs:')
-        print("\n".join(self.state.website_filtered_subpage_urls))
+        # print(f'Type for subpage: {type(self.state.website_subpage_urls)}')
+        # print(f'All Website URLs:')
+        # print("\n".join(self.state.website_subpage_urls))
+        # print(f'Filtered Website URLs:')
+        # print("\n".join(self.state.website_filtered_subpage_urls))
         return sub_links
 
 
